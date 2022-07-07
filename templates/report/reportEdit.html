@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Shinzo SAITO">
+    <title>レポート情報編集</title>
+    <link rel="stylesheet" href="/ph34/sharereports/public/css/main.css" type="text/css">
+</head>
+
+<body>
+    <header>
+        <h1>レポート情報編集</h1>
+        <p><a href="/ph34/sharereports/public/logout">ログアウト</a></p>
+        <p>ユーザ名:{{name}}</p>
+    </header>
+    <nav id="breadcrumbs">
+        <ul>
+            <li><a href="/ph34/sharereports/public/report/showReportList">レポートリスト</a></li>
+            <li><a href="/ph34/sharereports/public/report/showReportDetail/{{rpList.id}}">レポート情報詳細</a></li>
+            <li>レポート情報編集</li>
+        </ul>
+    </nav>
+    {% if validationMsgs %}
+    <section id="errorMsg">
+        <p>以下のメッセージをご確認ください。</p>
+        <ul>
+            {% for msg in validationMsgs %}
+            <li>{{msg}}</li>
+            {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+    <section>
+        <p>
+            情報を編集し、登録ボタンをクリックしてください。
+        </p>
+        <form action="/ph34/sharereports/public/report/reportEdit" method="post" class="box">
+            レポートID:&nbsp;{{rpList.id}}<br>
+            <input type="hidden" name="editId" value="{{rpList.id}}">
+            <label for="addEmHireDate">
+                作業日&nbsp;<span class="required">必須</span>
+                <select name="editYear" required>
+                <option value="">---</option>
+                {% for year in 2000..2030 %}
+                {% if year == date.0 %}
+                <option value="{{year}}" selected>{{year}}</option>
+                {% else %}
+                <option value="{{year}}">{{year}}</option>
+                {% endif %}
+                {% endfor %}
+                </select>
+
+                <select name="editMonth" required>
+                <option value="">---</option>
+                {% for month in 1..12 %}
+                {% if month == date.1 %}
+                <option value="{{month}}" selected>{{month}}</option>
+                {% else %}
+                <option value="{{month}}">{{month}}</option>
+                {% endif %}
+                {% endfor %}
+                </select>
+
+                <select name="editDate" required>
+                    <option value="">---</option>
+                    {% for day in 1..31 %}
+                    {% if day == date.2 %}
+                    <option value="{{day}}" selected>{{day}}</option>
+                    {% else %}
+                    <option value="{{day}}">{{day}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select><br>
+</label>
+            <label for="addEmHireDate">
+                    作業開始時刻&nbsp;<span class="required">必須</span>
+    
+                    <select name="editTime" required>
+                    <option value="">---</option>
+                    {% for time in 1..24 %}
+                    {% if time == from.0 %}
+                    <option value="{{time}}" selected>{{time}}</option>
+                    {% else %}
+                    <option value="{{time}}">{{time}}</option>
+                    {% endif %}
+                    {% endfor %}
+                    </select>
+    
+                    <select name="editMin" required>
+                        <option value="">---</option>
+                        {% if from.1 is defined %}
+                        <option value="0" selected>00</option>
+                        {% else %}
+                        <option value="0">00</option>
+                        {% endif %}
+                        {% for min in 1..59 %}
+                        {% if min == from.1  %}
+                        <option value="{{min}}" selected>{{min}}</option>
+                        {% else %}
+                        <option value="{{min}}">{{min}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select><br>
+                </label>
+            <label for="addEmHireDate">
+                        作業終了時刻&nbsp;<span class="required">必須</span>
+        
+                        <select name="editEndTime" required>
+                        <option value="">---</option>
+                        {% for end in 1..24 %}
+                        {% if end == to.0 %}
+                        <option value="{{end}}" selected>{{end}}</option>
+                        {% else %}
+                        <option value="{{end}}">{{end}}</option>
+                        {% endif %}
+                        {% endfor %}
+                        </select>
+        
+                        <select name="editEndMin" required>
+                            <option value="" selected>---</option>
+                            {% if from.1 is defined  %}
+                            <option value="0" selected>00</option>
+                            {% else %}
+                            <option value="0">00</option>
+                        {% endif %}
+                            {% for endmin in 1..59 %}
+                            {% if endmin == to.1 %}
+                            <option value="{{endmin}}" selected>{{endmin}}</option>
+                            {% else %}
+                            <option value="{{endmin}}">{{endmin}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select><br>
+                    </label>
+            <label for="addDpId">
+                            作業種類&nbsp;<span class="required">必須</span>
+                            <select name="editRcId" required>
+                            <option value="">---</option>
+                        
+                            {% for rcId, report in rcList %}
+                            {% if rcId == rpList.rpId %}
+                            <option value="{{rcId}}" selected>{{rcId}}:{{report.rcName}}</option>
+                            {% else %}
+                            <option value="{{rcId}}">{{rcId}}:{{report.rcName}}</option>
+                            {% endif %}
+                            {% endfor %}
+                            </select><br>
+                        </label>
+            <label for="addDpLoc">
+                            作業内容&nbsp;<span class="required">必須</span>
+                            <textarea id="editRpCn" name="editRpCn" required>{{rpList.rpContent}}</textarea>
+                            </label>
+            <button type="submit">登録</button>
+        </form>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Shinzo SAITO">
+    <title>レポート情報リスト</title>
+    <link rel="stylesheet" href="/ph34/ShareReports/public/css/main.css" type="text/css">
+</head>
+
+<body>
+    <header>
+        <h1>レポート情報リスト</h1>
+        <p><a href="/ph34/sharereports/public/logout">ログアウト</a></p>
+    </header>
+    <p>ユーザ名:{{name}}</p>
+    <nav id="breadcrumbs">
+        <ul>
+            <li>レポート情報リスト</li>
+        </ul>
+    </nav>
+    {% if flashMsg %}
+    <section id="flashMsg">
+        <p>{{flashMsg}}</p>
+    </section>
+    {% endif %}
+    <section>
+        <p>
+            新規登録は<a href="/ph34/sharereports/public/report/goReportAdd">こちら</a>から
+        </p>
+    </section>
+    <section>
+        <table>
+            <thead>
+                <tr>
+                    <th>レポートID</th>
+                    <th>作業日</th>
+                    <th>作業内容</th>
+                    <th>報告者名</th>
+                    <th colspan="2">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for id, report in rpList %}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{report.rpDate}}</td>
+                    <td>{{report.rpContent | slice(0,10)}}</td>
+                    {% if report.usId == 1 %}
+                    <td>{{ name }}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    <td>
+                        <a href="/ph34/sharereports/public/report/showReportDetail/{{id}}">詳細</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">該当レポートは存在しません。</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+</body>
+
+</html>

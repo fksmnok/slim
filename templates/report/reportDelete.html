@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Shinzo SAITO">
+    <title>レポート情報削除</title>
+    <link rel="stylesheet" href="/ph34/sharereports/public/css/main.css" type="text/css">
+</head>
+
+<body>
+    <h1>レポート情報削除</h1>
+    <p><a href="/ph34/sharereports/public/logout">ログアウト</a></p>
+    <p>ユーザ名:{{name}}</p>
+    <nav id="breadcrumbs">
+        <ul>
+            <li><a href="/ph34/sharereports/public/report/showReportList">レポート情報リスト</a></li>
+            <li><a href="/ph34/sharereports/public/report/showReportDetail/{{id}}">レポート情報詳細</a></li>
+            <li>レポート情報削除</li>
+        </ul>
+    </nav>
+    <p>
+        以下の情報を削除します。<br> よろしければ、削除ボタンをクリックしてください。
+    </p>
+    <section>
+        <dl>
+            <dt>レポートID</dt>
+            <dd>{{id}}</dd>
+            <dt>報告者ID</dt>
+            <dd>{{rpList.usId}}</dd>
+            <dt>作業日</dt>
+            <dd>{{rpList.rpDate}}</dd>
+            <dt>作業開始時刻</dt>
+            <dd>{{rpList.rpFrom}}</dd>
+            <dt>作業終了時刻</dt>
+            <dd>{{rpList.rpTo}}</dd>
+            <dt>作業種類ID</dt>
+            <dd>{{rpList.rpId}}</dd>
+            <dt>作業内容</dt>
+            <dd>{{rpList.rpContent|nl2br}}</dd>
+            <dt>レポート登録日時</dt>
+            <dd>{{rpList.rpAt}}</dd><br>
+            <dd>
+                <form action="/ph34/sharereports/public/report/reportDelete" method="post">
+                    <input type="hidden" id="deleteReportId" name="deleteReportId" value="{{id}}">
+                    <button type="submit">削除</button>
+                </form>
+            </dd>
+        </dl>
+    </section>
+    <a href="/ph34/sharereports/public/report/showReportDetail/{{id}}">戻る</a>
+</body>
+
+</html>

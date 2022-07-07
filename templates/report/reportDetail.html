@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Shinzo SAITO">
+    <title>レポート情報詳細</title>
+    <link rel="stylesheet" href="/ph34/sharereports/public/css/main.css" type="text/css">
+</head>
+
+<body>
+    <h1>レポート情報詳細</h1>
+    <p><a href="/ph34/sharereports/public/logout">ログアウト</a></p>
+    <p>ユーザ名:{{name}}</p>
+    <nav id="breadcrumbs">
+        <ul>
+            <li><a href="/ph34/sharereports/public/report/showReportList">レポート情報リスト</a></li>
+            <li>レポート情報詳細</li>
+        </ul>
+    </nav>
+    {% if flashMsg %}
+    <section id="flashMsg">
+        <p>{{flashMsg}}</p>
+    </section>
+    {% endif %}
+    <section>
+        <dl>
+            <dt>レポートID</dt>
+            <dd>{{id}}</dd>
+            <dt>報告者名:メールアドレス</dt>
+            <dd>{{usList.usName}}:{{usList.usMail}}</dd>
+            <dt>作業日</dt>
+            <dd>{{rpList.rpDate}}</dd>
+            <dt>作業開始時刻</dt>
+            <dd>{{rpList.rpFrom}}</dd>
+            <dt>作業終了時刻</dt>
+            <dd>{{rpList.rpTo}}</dd>
+            <dt>作業種類名</dt>
+            <dd>{{rpList.rpId}}:{{rcList.rcName}}</dd>
+            <dt>作業内容</dt>
+            <dd>{{rpList.rpContent|nl2br}}</dd>
+            <dt>レポート登録日時</dt>
+            <dd>{{rpList.rpAt}}</dd>
+            <dt>操作</dt>
+            <dd><a href="/ph34/sharereports/public/report/prepareReportEdit/{{id}}">編集</a></dd>
+            <dd><a href="/ph34/sharereports/public/report/confirmReportDelete/{{id}}">削除</a></dd>
+        </dl>
+    </section>
+</body>
+
+</html>
